@@ -30,7 +30,7 @@ jobs:
     #   run: mv build/static/js/main.*.*.js build/static/js/main.js
       
     - name: build it
-      run: echo where are we ${{ pwd }}
+      run: echo "where are we ${PWD}"
 #      run: npm run build
 
 # Creating my deployment package and compressing it into a zip file   
