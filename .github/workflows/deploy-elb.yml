@@ -32,6 +32,8 @@ jobs:
 # Creating my deployment package and compressing it into a zip file   
     - name: Generate deployment package
       run: zip -r deploy.zip * -x "**node_modules**"
+
+    - name: Add package.json
       run: zip deploy.zip package.json 
 
     - name: Get timestamp
