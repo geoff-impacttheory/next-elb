@@ -1,15 +1,11 @@
+name: QA Deploy
 
-# specify the name of your project
-name: React Charts Build
-
-# Configure what events and branches you want to trigger your pipeline on, in this case I want it to be trgiggered when I push the code in react-profile branch
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-    
-# Create jobs to create your image which you can deploy on AWS, I am running my Node12 application on ubuntu OS. 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,18 +26,13 @@ jobs:
       - name: Generate deployment package
         run: npm run next-install && npm run generate-zip
 
-# Now, its time to deploy our package to Beanstalk that we've configured earlier, to deploy our app we need Secret keys that we can get from the AWS user, every user has separate keys on AWS. 
-
-    - name: Beanstalk Deploy for app
-      uses: einaregilsson/beanstalk-deploy@v10
-      with:
-        aws_access_key: ${{secrets.AWS_ACCESS_KEY}}
-        aws_secret_key: ${{secrets.AWS_SECRET_KEY}}
-        application_name: "crm-admin-portal-dev"
-        environment_name: "Crmadminportaldev-env-1"
-        region: "us-east-1"
-        version_label: "crm-admin-portal-dev-${{ steps.format-time.outputs.replaced }}"
-        deployment_package: deploy.zip
-
-    - name: Deployed!
-      run: echo App deployed to ELB
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{secrets.AWS_ACCESS_KEY}}
+          aws_secret_key: ${{secrets.AWS_SECRET_KEY}}
+          application_name: "crm-admin-portal-dev"
+          environment_name: "Crmadminportaldev-env-1"
+          region: "us-east-1"
+          version_label: "crm-admin-portal-dev-${{ steps.format-time.outputs.replaced }}"
+          deployment_package: deploy.zip
