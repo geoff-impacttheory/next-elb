@@ -32,8 +32,9 @@ jobs:
 # Creating my deployment package and compressing it into a zip file   
     - name: Generate deployment package
       # run: zip -r deploy.zip * -x "**node_modules**"
-      # run: zip -r deploy.zip .next/
-      run: zip -r deploy.zip . -i .next/*
+      # run: zip -r deploy.zip .next/*
+      # run: zip -r deploy.zip . -i .next/*
+      run: zip -r deploy.zip .next
 
     - name: Add package.json
       run: zip deploy.zip package.json 
