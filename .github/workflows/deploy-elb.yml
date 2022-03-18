@@ -34,5 +34,5 @@ jobs:
           application_name: "crm-admin-portal-dev"
           environment_name: "Crmadminportaldev-env-1"
           region: "us-east-1"
-          version_label: "crm-admin-portal-dev-${{ steps.format-time.outputs.replaced }}"
+          version_label: "crm-admin-portal-dev-${{ date '+%Y-%m-%d-%H:%M' }}"
           deployment_package: deploy.zip
